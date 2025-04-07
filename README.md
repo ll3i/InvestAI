@@ -24,6 +24,23 @@ pip install -r requirements.txt
 - OpenAI API 키 설정
 - 필요한 설정 파일 구성
 
+## 환경 설정
+
+1. 필요한 패키지 설치:
+```bash
+pip install -r requirements.txt
+```
+
+2. API 키 설정:
+- `.env` 파일을 생성하고 다음 내용을 추가합니다:
+```
+OPENAI_API_KEY=your_api_key_here
+```
+- 또는 환경 변수로 설정:
+```bash
+export OPENAI_API_KEY=your_api_key_here
+```
+
 ## 사용 방법
 
 1. 프로그램 실행
