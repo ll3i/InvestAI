@@ -25,7 +25,8 @@
       "mcp__github__create_or_update_file",
       "Bash(git add:*)",
       "Bash(git config:*)",
-      "mcp__github__get_file_contents"
+      "mcp__github__get_file_contents",
+      "Bash(git checkout:*)"
     ],
     "deny": []
   }
