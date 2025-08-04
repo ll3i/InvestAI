@@ -1,8 +1,251 @@
-{% extends 'layout.html' %}
-{% block title %}MY 투자{% endblock %}
-{% block body_class %}{% endblock %}
-{% block extra_css %}
-<style>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY 투자</title>
+    
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 아이콘 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 커스텀 CSS -->
+    <link rel="stylesheet" href="?v=">
+    <link rel="stylesheet" href="?v=">
+    
+    <style>
+        :root {
+            --primary-color: #1454FE;
+            --primary-dark: #0B3DCF;
+            --primary-light: #E6EFFF;
+            --secondary-color: #6C7B95;
+            --success-color: #22C55E;
+            --danger-color: #EF4444;
+            --warning-color: #F59E0B;
+            --dark-color: #1F2937;
+            --light-color: #F8FAFC;
+            --border-color: #E2E8F0;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #1454FE 0%, #0B3DCF 100%);
+            --gradient-secondary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--light-color);
+            font-size: 16px;
+            letter-spacing: -0.02em;
+        }
+        
+        /* Navigation Styles */
+        .pixie-navbar {
+            background: #FFFFFF !important;
+            border-bottom: 1px solid #E5E7EB !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 1000 !important;
+            padding: 0 !important;
+            min-height: 64px !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        
+        .pixie-navbar .container-fluid {
+            display: flex !important;
+            align-items: center !important;
+            height: 100% !important;
+        }
+        
+        /* 로고 이미지 강제 표시 */
+        .pixie-navbar .navbar-brand img {
+            display: inline-block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            height: 40px !important;
+            width: auto !important;
+            max-width: none !important;
+            min-width: auto !important;
+            position: relative !important;
+            z-index: 10 !important;
+        }
+        
+        /* 아이콘 이미지 강제 표시 */
+        .nav-icon-link img {
+            display: inline-block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            width: 20px !important;
+            height: 20px !important;
+            max-width: none !important;
+            min-width: 20px !important;
+            position: relative !important;
+            z-index: 10 !important;
+        }
+        
+        /* 이미지를 숨길 수 있는 모든 스타일 제거 */
+        img {
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        /* Pixie 텍스트가 표시되지 않도록 */
+        .pixie-navbar .navbar-brand {
+            font-size: 0 !important;
+            color: transparent !important;
+        }
+        
+        /* 로고 이미지만 표시 */
+        .pixie-navbar .navbar-brand img {
+            font-size: initial !important;
+        }
+        
+        
+        .pixie-navbar .navbar-nav {
+            gap: 40px;
+            display: flex !important;
+            align-items: center !important;
+            margin-bottom: 0 !important;
+        }
+        
+        .pixie-navbar .nav-item {
+            display: flex !important;
+            align-items: center !important;
+        }
+        
+        .pixie-navbar .nav-link:hover,
+        .pixie-navbar .nav-link.active {
+            color: var(--primary-color) !important;
+            background-color: var(--primary-light);
+        }
+        
+        .pixie-navbar .navbar-toggler {
+            border: none;
+            padding: 4px 8px;
+        }
+        
+        .pixie-navbar .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        /* Container and Layout */
+        .pixie-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .pixie-main {
+            min-height: calc(100vh - 200px);
+            padding: 40px 0;
+        }
+        
+        /* Cards */
+        .pixie-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+        
+        .pixie-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Buttons */
+        .btn-pixie-primary {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-pixie-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            color: white;
+        }
+        
+        .btn-pixie-secondary {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-pixie-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Typography */
+        .pixie-heading {
+            color: var(--text-primary);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .pixie-text-muted {
+            color: var(--text-secondary);
+        }
+        
+        /* Utilities */
+        .pixie-text-center {
+            text-align: center;
+        }
+        
+        .pixie-mb-3 {
+            margin-bottom: 1rem;
+        }
+        
+        .pixie-mb-4 {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .pixie-container {
+                padding: 0 16px;
+            }
+            
+            .pixie-main {
+                padding: 20px 0;
+            }
+        }
+
+        /* 네비게이션 항상 표시 */
+    </style>
+    <style><style>
 /* MY 투자 페이지 스타일 */
 .my-invest-container {
     padding: 0;
@@ -507,12 +750,338 @@
         grid-template-columns: 1fr;
     }
 }
-</style>
-{% endblock %}
+</style></style>
+</head>
+<body class="">
+    <!-- 내비게이션 바 -->
+    <nav class="navbar navbar-expand-lg pixie-navbar default-navbar show" style="display: flex; align-items: center;">
+        <div class="container-fluid pixie-container" style="display: flex; align-items: center;">
+            <a class="navbar-brand" href="index.html" style="display: flex; align-items: center; padding: 0;">
+                <img src="static/images/logo.png" alt="" style="height: 40px; width: auto; display: block; visibility: visible; opacity: 1;" onerror="this.style.display='none'; console.error('Logo image failed to load:', this.src)">
+                <span style="display: none;">Pixie</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav" style="display: flex; align-items: center;">
+                <ul class="navbar-nav me-auto" style="margin-bottom: 0;">
+                    <li class="nav-item">
+                        <a class="nav-link" href="survey.html">
+                            투자 설문
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="learning.html">
+                            투자 학습
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="chatbot.html">
+                            AI 챗봇
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="stock.html">
+                            주가 예측
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="news.html">
+                            뉴스/이슈
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my_invest.html">
+                            MY 투자
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center gap-3">
+                    <a href="/search" class="nav-icon-link">
+                        <img src="static/images/d1.png" alt="검색" style="width: 20px; height: 20px; display: block;" onerror="console.error('Search icon failed to load:', this.src)">
+                    </a>
+                    <a href="/alerts" class="nav-icon-link position-relative">
+                        <img src="static/images/d2.png" alt="알림" style="width: 20px; height: 20px; display: block;" onerror="console.error('Alert icon failed to load:', this.src)">
+                        <span id="alert-unread-badge" class="badge bg-danger rounded-pill position-absolute" style="display:none; top: -5px; right: -5px; font-size: 10px;">0</span>
+                    </a>
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle nav-icon-link p-0" href="#" role="button" data-bs-toggle="dropdown" style="padding: 8px !important;">
+                            <img src="static/images/d3.png" alt="계정" style="width: 20px; height: 20px; display: block;" onerror="console.error('Account icon failed to load:', this.src)">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="/profile">프로필</a></li>
+                            <li><a class="dropdown-item" href="/settings">설정</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/help">도움말</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-{% block extra_js %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="/static/js/portfolio-chart.js"></script>
+    <!-- 메인 컨텐츠 -->
+    
+    
+    <main class="pixie-main">
+        <div class="pixie-container">
+            <div class="my-invest-container">
+    <!-- 상단 헤더 이미지와 타이틀 영역 -->
+    <div style="position: relative; width: 100%; height: 400px; overflow: hidden; margin-bottom: 40px;">
+        <img src="static/images/invest1.png" 
+             alt="나만의 전략을 세우는 맞춤 투자 공간, MY투자" 
+             style="width: 100%; height: 100%; object-fit: cover;">
+        <div style="position: absolute; top: 50%; left: 96px; transform: translateY(-50%);">
+            <h1 style="font-size: 48px; font-weight: 700; color: #000; margin: 0; line-height: 1.2;">
+                나만의 전략을 세우는<br>
+                맞춤 투자 공간, MY투자
+            </h1>
+            <p style="font-size: 20px; color: #666; margin-top: 16px;">
+                AI가 분석한 투자 성향과 관심 뉴스까지 한 곳에.<br>
+                픽시와 함께 더 똑똑하고 안정적인 투자 여정을 시작해보세요.
+            </p>
+        </div>
+    </div>
+
+    <!-- 상단 컨트롤 영역 -->
+    <div class="my-invest-controls">
+        <h1 style="font-size: 36px; font-weight: 700; color: #000; margin: 0;">MY 투자</h1>
+        <div class="my-invest-filter-dropdown">
+            국내 뉴스
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </div>
+
+    <!-- 탭 메뉴 -->
+    <div class="my-invest-tabs">
+        <button class="my-invest-tab active" onclick="showTab('portfolio">내 포트폴리오</button>
+        <button class="my-invest-tab" onclick="showTab('watchlist">관심 종목</button>
+        <button class="my-invest-tab" onclick="showTab('analysis">투자 분석</button>
+        <button class="my-invest-tab" onclick="showTab('news">맞춤 뉴스</button>
+    </div>
+
+    <!-- 투자 프로필 카드 (내 포트폴리오 탭에서만 표시) -->
+    <div id="portfolio-section">
+        <div class="profile-card" id="profile-info" style="display: none;">
+            <div class="profile-header">
+                <h2 class="profile-title">내 투자 프로필</h2>
+                <a href="survey.html" class="stock-action-btn">
+                    <i class="fas fa-sync-alt"></i>
+                    다시 분석
+                </a>
+            </div>
+            <div class="profile-content">
+                <div class="profile-item">
+                    <p class="profile-label">투자 성향</p>
+                    <p class="profile-value" id="investment-type">-</p>
+                </div>
+                <div class="profile-item">
+                    <p class="profile-label">위험 감수도</p>
+                    <p class="profile-value" id="risk-score">-</p>
+                </div>
+                <div class="profile-item">
+                    <p class="profile-label">추천 포트폴리오</p>
+                    <p class="profile-value" id="portfolio-type">-</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 맞춤형 포트폴리오 차트 -->
+        <div class="portfolio-card" id="portfolio-chart-section" style="display: none; margin-top: 24px;">
+            <h3 class="profile-title">맞춤형 포트폴리오 구성</h3>
+            <div class="portfolio-chart-container">
+                <canvas id="myPortfolioChart"></canvas>
+            </div>
+            <div class="portfolio-tips">
+                <p><i class="fas fa-info-circle"></i> 그래프를 클릭하면 상세 종목을 확인할 수 있습니다</p>
+            </div>
+            <button class="primary-button" style="margin-top: 20px; width: 100%;" onclick="showDetailedPortfolio()">
+                자세히 보기
+            </button>
+        </div>
+
+        <!-- 추천 종목 리스트 -->
+        <div class="recommended-stocks-section" id="recommended-stocks-section" style="display: none; margin-top: 40px;">
+            <h3 class="profile-title">맞춤 추천 종목</h3>
+            <div id="myRecommendedStocksGrid" class="my-invest-grid">
+                <!-- 동적으로 로드됨 -->
+            </div>
+        </div>
+
+        <!-- 포트폴리오가 없는 경우 -->
+        <div class="empty-state" id="empty-portfolio" style="display: none;">
+            <div class="empty-icon">
+                <i class="fas fa-chart-pie"></i>
+            </div>
+            <h3 class="empty-title">아직 투자 프로필이 없습니다</h3>
+            <p class="empty-description">
+                투자 성향을 분석하고 맞춤 포트폴리오를 추천받아보세요
+            </p>
+            <a href="survey.html" class="primary-button">투자 성향 분석 시작</a>
+        </div>
+    </div>
+
+    <!-- 관심 종목 그리드 -->
+    <div id="watchlist-section" style="display: none;">
+        <div class="my-invest-grid" id="watchlist-grid">
+            <!-- 동적으로 로드됨 -->
+        </div>
+        
+        <!-- 관심 종목이 없는 경우 -->
+        <div class="empty-state" id="empty-watchlist" style="display: none;">
+            <div class="empty-icon">
+                <i class="fas fa-bookmark"></i>
+            </div>
+            <h3 class="empty-title">관심 종목이 없습니다</h3>
+            <p class="empty-description">
+                주식을 검색하고 관심 종목을 추가해보세요
+            </p>
+            <a href="stock.html" class="primary-button">종목 검색하기</a>
+        </div>
+    </div>
+
+    <!-- 투자 분석 섹션 -->
+    <div id="analysis-section" style="display: none;">
+        <div class="empty-state">
+            <div class="empty-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3 class="empty-title">투자 분석 준비 중</h3>
+            <p class="empty-description">
+                곧 제공될 예정입니다
+            </p>
+        </div>
+    </div>
+
+    <!-- 맞춤 뉴스 섹션 -->
+    <div id="news-section" style="display: none;">
+        <div class="my-invest-grid" id="news-grid">
+            <!-- 동적으로 로드됨 -->
+        </div>
+    </div>
+</div>
+        </div>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="bg-dark text-light py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5 class="mb-3">
+                        <span style="color: var(--primary-color); font-weight: 800;">✨ Pixie</span>
+                    </h5>
+                    <p class="text-muted">
+                        AI 기반 투자 분석으로 더 똑똑한 투자 결정을 내려보세요. 
+                        개인화된 포트폴리오와 실시간 시장 분석을 제공합니다.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-light"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="mb-3">서비스</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="survey.html" class="text-muted text-decoration-none">투자 성향 분석</a></li>
+                        <li><a href="chatbot.html" class="text-muted text-decoration-none">AI 어드바이저</a></li>
+                        <li><a href="stock.html" class="text-muted text-decoration-none">주가 예측</a></li>
+                        <li><a href="my_invest.html" class="text-muted text-decoration-none">포트폴리오</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="mb-3">정보</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="news.html" class="text-muted text-decoration-none">뉴스 분석</a></li>
+                        <li><a href="learning.html" class="text-muted text-decoration-none">투자 학습</a></li>
+                        <li><a href="/alerts" class="text-muted text-decoration-none">알림 서비스</a></li>
+                        <li><a href="/help" class="text-muted text-decoration-none">도움말</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="mb-3">계정</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/profile" class="text-muted text-decoration-none">프로필</a></li>
+                        <li><a href="/settings" class="text-muted text-decoration-none">설정</a></li>
+                        <li><a href="/privacy" class="text-muted text-decoration-none">개인정보</a></li>
+                        <li><a href="/terms" class="text-muted text-decoration-none">이용약관</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-12 mb-4">
+                    <h6 class="mb-3">지원</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/contact" class="text-muted text-decoration-none">문의하기</a></li>
+                        <li><a href="/faq" class="text-muted text-decoration-none">자주묻는질문</a></li>
+                        <li><a href="/feedback" class="text-muted text-decoration-none">피드백</a></li>
+                        <li><a href="/status" class="text-muted text-decoration-none">서비스 상태</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="my-4">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-muted mb-0">
+                        © 2024 Pixie. All rights reserved.
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="text-muted mb-0">
+                        <small>데모 서비스입니다. 투자에는 원금 손실 위험이 있습니다.</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- 챗봇 위젯 JS -->
+    <script src="?v="></script>
+    
+    <!-- 커스텀 JS -->
+    <script>
+        // 알림 배지 업데이트 함수
+        function updateAlertBadge() {
+            const badge = document.getElementById('alert-unread-badge;
+            if (badge) {
+                // 여기서 실제 알림 수를 가져오는 API 호출
+                const unreadCount = 0; // 임시로 0으로 설정
+                if (unreadCount > 0) {
+                    badge.textContent = unreadCount;
+                    badge.style.display = 'inline-block';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+        }
+        
+        // 페이지 로드 시 알림 배지 업데이트
+        document.addEventListener('DOMContentLoaded', updateAlertBadge);
+        
+        // 5분마다 알림 배지 업데이트
+        setInterval(updateAlertBadge, 300000);
+    </script>
+    
+    <script><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="static/js/portfolio-chart.js"></script>
 <script>
 // 전역 변수
 let myPortfolioChart = null;
@@ -528,13 +1097,13 @@ $(document).ready(function() {
 // 탭 전환
 function showTab(tabName) {
     // 모든 탭 비활성화
-    $('.my-invest-tab').removeClass('active');
+    $('.my-invest-tab.removeClass('active;
     
     // 모든 섹션 숨기기
-    $('#portfolio-section, #watchlist-section, #analysis-section, #news-section').hide();
+    $('#portfolio-section, #watchlist-section, #analysis-section, #news-section.hide();
     
     // 선택된 탭 활성화
-    event.target.classList.add('active');
+    event.target.classList.add('active;
     
     // 선택된 섹션 표시
     $(`#${tabName}-section`).show();
@@ -543,39 +1112,39 @@ function showTab(tabName) {
 // 사용자 프로필 로드
 async function loadUserProfile() {
     try {
-        const response = await $.get('/api/user-profile');
+        const response = await $.get('/api/user-profile;
         if (response.profile) {
             userProfileData = response.profile;
             
-            $('#empty-portfolio').hide();
-            $('#profile-info').show();
+            $('#empty-portfolio.hide();
+            $('#profile-info.show();
             
-            $('#investment-type').text(response.profile.type_label || '분석 중');
-            $('#risk-score').text(response.profile.risk_score ? response.profile.risk_score + '점' : '-');
-            $('#portfolio-type').text(response.profile.portfolio_type || '균형형');
+            $('#investment-type.text(response.profile.type_label || '분석 중;
+            $('#risk-score.text(response.profile.risk_score ? response.profile.risk_score + '점' : '-;
+            $('#portfolio-type.text(response.profile.portfolio_type || '균형형;
             
             // 포트폴리오 차트 표시
-            $('#portfolio-chart-section').show();
+            $('#portfolio-chart-section.show();
             loadPortfolioChart(response.profile.risk_score || 0);
             
             // 추천 종목 로드
             loadRecommendedStocks(response.profile);
         } else {
-            $('#profile-info').hide();
-            $('#portfolio-chart-section').hide();
-            $('#empty-portfolio').show();
+            $('#profile-info.hide();
+            $('#portfolio-chart-section.hide();
+            $('#empty-portfolio.show();
         }
     } catch (error) {
         console.error('프로필 로드 실패:', error);
-        $('#profile-info').hide();
-        $('#portfolio-chart-section').hide();
-        $('#empty-portfolio').show();
+        $('#profile-info.hide();
+        $('#portfolio-chart-section.hide();
+        $('#empty-portfolio.show();
     }
 }
 
 // 포트폴리오 차트 로드
 function loadPortfolioChart(riskScore) {
-    const ctx = document.getElementById('myPortfolioChart');
+    const ctx = document.getElementById('myPortfolioChart;
     if (!ctx) return;
 
     // 위험 성향에 따른 포트폴리오 구성
@@ -715,8 +1284,8 @@ async function loadRecommendedStocks(profile) {
 
 // 상세 포트폴리오 보기
 function showDetailedPortfolio() {
-    $('#recommended-stocks-section').toggle();
-    if ($('#recommended-stocks-section').is(':visible')) {
+    $('#recommended-stocks-section.toggle();
+    if ($('#recommended-stocks-section.is(':visible) {
         loadDetailedStocks();
     }
 }
@@ -748,11 +1317,11 @@ async function loadDetailedStocks() {
 
 // 상세 종목 표시
 function displayDetailedStocks(stocks) {
-    const grid = document.getElementById('myRecommendedStocksGrid');
+    const grid = document.getElementById('myRecommendedStocksGrid;
     if (!grid) return;
 
     grid.innerHTML = stocks.map(stock => `
-        <div class="my-invest-card" onclick="viewStock('${stock.ticker}')">
+        <div class="my-invest-card" onclick="viewStock('${stock.ticker}">
             <div class="my-invest-card-bg"></div>
             <div class="my-invest-card-content">
                 <div class="stock-category">추천 종목</div>
@@ -765,7 +1334,7 @@ function displayDetailedStocks(stocks) {
                     <span class="stock-code">${stock.ticker}</span>
                     <div style="display: flex; gap: 12px; align-items: center;">
                         <span class="stock-code">평가: ${stock.score}점</span>
-                        <button class="stock-action-btn" onclick="event.stopPropagation(); addToWatchlist('${stock.ticker}', '${stock.name}')">
+                        <button class="stock-action-btn" onclick="event.stopPropagation(); addToWatchlist('${stock.ticker}', '${stock.name}">
                             <i class="fas fa-bookmark"></i>
                             관심
                         </button>
@@ -773,7 +1342,7 @@ function displayDetailedStocks(stocks) {
                 </div>
             </div>
         </div>
-    `).join('');
+    `).join(';
 }
 
 // 관심 종목 추가
@@ -784,11 +1353,11 @@ function addToWatchlist(ticker, name) {
         contentType: 'application/json',
         data: JSON.stringify({ ticker: ticker, name: name }),
         success: function() {
-            alert('관심 종목에 추가되었습니다.');
+            alert('관심 종목에 추가되었습니다.;
             loadWatchlist();
         },
         error: function() {
-            alert('관심 종목 추가에 실패했습니다.');
+            alert('관심 종목 추가에 실패했습니다.;
         }
     });
 }
@@ -796,11 +1365,11 @@ function addToWatchlist(ticker, name) {
 // 관심 종목 로드
 function loadWatchlist() {
     $.get('/api/watchlist', function(data) {
-        const grid = $('#watchlist-grid');
+        const grid = $('#watchlist-grid;
         grid.empty();
         
         if (data.watchlist && data.watchlist.length > 0) {
-            $('#empty-watchlist').hide();
+            $('#empty-watchlist.hide();
             grid.show();
             
             data.watchlist.forEach(stock => {
@@ -808,7 +1377,7 @@ function loadWatchlist() {
                 const changeSign = stock.change_percent > 0 ? '+' : '';
                 
                 const card = `
-                    <div class="my-invest-card" onclick="viewStock('${stock.ticker}')">
+                    <div class="my-invest-card" onclick="viewStock('${stock.ticker}">
                         <div class="my-invest-card-bg"></div>
                         <div class="my-invest-card-content">
                             <div class="stock-category">${stock.sector || '주식'}</div>
@@ -819,7 +1388,7 @@ function loadWatchlist() {
                             </p>
                             <div class="stock-info">
                                 <span class="stock-code">${stock.ticker}</span>
-                                <button class="stock-action-btn" onclick="event.stopPropagation(); removeFromWatchlist('${stock.ticker}')">
+                                <button class="stock-action-btn" onclick="event.stopPropagation(); removeFromWatchlist('${stock.ticker}">
                                     <i class="fas fa-bookmark"></i>
                                     제거
                                 </button>
@@ -831,7 +1400,7 @@ function loadWatchlist() {
             });
         } else {
             grid.hide();
-            $('#empty-watchlist').show();
+            $('#empty-watchlist.show();
         }
     });
 }
@@ -839,13 +1408,13 @@ function loadWatchlist() {
 // 맞춤 뉴스 로드
 function loadCustomNews() {
     $.get('/api/news-portfolio', function(data) {
-        const grid = $('#news-grid');
+        const grid = $('#news-grid;
         grid.empty();
         
         if (data.news_list && data.news_list.length > 0) {
             data.news_list.slice(0, 8).forEach(news => {
                 const card = `
-                    <div class="my-invest-card" onclick="window.open('${news.link}', '_blank')">
+                    <div class="my-invest-card" onclick="window.open('${news.link}', '_blank">
                         <div class="my-invest-card-bg"></div>
                         <div class="my-invest-card-content">
                             <div class="stock-category">뉴스</div>
@@ -873,7 +1442,7 @@ function viewStock(ticker) {
 
 // 관심 종목 제거
 function removeFromWatchlist(ticker) {
-    if (confirm('관심 종목에서 제거하시겠습니까?')) {
+    if (confirm('관심 종목에서 제거하시겠습니까?) {
         $.ajax({
             url: `/api/watchlist/${ticker}`,
             type: 'DELETE',
@@ -886,7 +1455,7 @@ function removeFromWatchlist(ticker) {
 
 // 숫자 포맷팅
 function formatNumber(num) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",;
 }
 
 // 날짜 포맷팅
@@ -899,13 +1468,13 @@ function formatDate(dateStr) {
     if (hours < 1) return '방금 전';
     if (hours < 24) return `${hours}시간 전`;
     if (hours < 48) return '어제';
-    return date.toLocaleDateString('ko-KR');
+    return date.toLocaleDateString('ko-KR;
 }
 
 // 종목 상세 모달 표시 (portfolio-chart.js의 함수를 재정의)
 function showStockModal(category, stocks) {
     // 기존 모달 제거
-    const existingModal = document.getElementById('stockDetailModal');
+    const existingModal = document.getElementById('stockDetailModal;
     if (existingModal) {
         existingModal.remove();
     }
@@ -946,11 +1515,11 @@ function showStockModal(category, stocks) {
                                         ` : ''}
                                     </div>
                                     <button class="btn btn-sm btn-outline-primary view-detail-btn" 
-                                            onclick="showStockReportModal('${stock.code || stock.ticker}')">
+                                            onclick="showStockReportModal('${stock.code || stock.ticker}">
                                         자세히 보기
                                     </button>
                                 </div>
-                            `).join('')}
+                            `).join('}
                         </div>
                     </div>
                 </div>
@@ -960,7 +1529,7 @@ function showStockModal(category, stocks) {
 
     // 모달 추가 및 표시
     document.body.insertAdjacentHTML('beforeend', modalHTML);
-    const modal = new bootstrap.Modal(document.getElementById('stockDetailModal'));
+    const modal = new bootstrap.Modal(document.getElementById('stockDetailModal);
     modal.show();
 }
 
@@ -972,14 +1541,14 @@ async function showStockReportModal(ticker) {
         const data = await response.json();
         
         if (!data.success) {
-            alert('종목 정보를 불러올 수 없습니다.');
+            alert('종목 정보를 불러올 수 없습니다.;
             return;
         }
         
         const report = data.report;
         
         // 기존 모달 제거
-        const existingModal = document.getElementById('stockReportModal');
+        const existingModal = document.getElementById('stockReportModal;
         if (existingModal) {
             existingModal.remove();
         }
@@ -1068,7 +1637,7 @@ async function showStockReportModal(ticker) {
                                             <i class="fas fa-check-circle"></i>
                                             <span>${reason}</span>
                                         </div>`
-                                    ).join('')}
+                                    ).join('}
                                 </div>
                             </div>
                             
@@ -1089,12 +1658,12 @@ async function showStockReportModal(ticker) {
         
         // 모달 추가 및 표시
         document.body.insertAdjacentHTML('beforeend', modalHTML);
-        const modal = new bootstrap.Modal(document.getElementById('stockReportModal'));
+        const modal = new bootstrap.Modal(document.getElementById('stockReportModal);
         modal.show();
         
     } catch (error) {
         console.error('종목 보고서 로드 실패:', error);
-        alert('종목 정보를 불러오는 중 오류가 발생했습니다.');
+        alert('종목 정보를 불러오는 중 오류가 발생했습니다.;
     }
 }
 
@@ -1135,143 +1704,6 @@ function getMetricClass(type, value) {
             return '';
     }
 }
-</script>
-{% endblock %}
-
-{% block content %}
-<div class="my-invest-container">
-    <!-- 상단 헤더 이미지와 타이틀 영역 -->
-    <div style="position: relative; width: 100%; height: 400px; overflow: hidden; margin-bottom: 40px;">
-        <img src="/static/images/invest1.png" 
-             alt="나만의 전략을 세우는 맞춤 투자 공간, MY투자" 
-             style="width: 100%; height: 100%; object-fit: cover;">
-        <div style="position: absolute; top: 50%; left: 96px; transform: translateY(-50%);">
-            <h1 style="font-size: 48px; font-weight: 700; color: #000; margin: 0; line-height: 1.2;">
-                나만의 전략을 세우는<br>
-                맞춤 투자 공간, MY투자
-            </h1>
-            <p style="font-size: 20px; color: #666; margin-top: 16px;">
-                AI가 분석한 투자 성향과 관심 뉴스까지 한 곳에.<br>
-                픽시와 함께 더 똑똑하고 안정적인 투자 여정을 시작해보세요.
-            </p>
-        </div>
-    </div>
-
-    <!-- 상단 컨트롤 영역 -->
-    <div class="my-invest-controls">
-        <h1 style="font-size: 36px; font-weight: 700; color: #000; margin: 0;">MY 투자</h1>
-        <div class="my-invest-filter-dropdown">
-            국내 뉴스
-            <i class="fas fa-chevron-down"></i>
-        </div>
-    </div>
-
-    <!-- 탭 메뉴 -->
-    <div class="my-invest-tabs">
-        <button class="my-invest-tab active" onclick="showTab('portfolio')">내 포트폴리오</button>
-        <button class="my-invest-tab" onclick="showTab('watchlist')">관심 종목</button>
-        <button class="my-invest-tab" onclick="showTab('analysis')">투자 분석</button>
-        <button class="my-invest-tab" onclick="showTab('news')">맞춤 뉴스</button>
-    </div>
-
-    <!-- 투자 프로필 카드 (내 포트폴리오 탭에서만 표시) -->
-    <div id="portfolio-section">
-        <div class="profile-card" id="profile-info" style="display: none;">
-            <div class="profile-header">
-                <h2 class="profile-title">내 투자 프로필</h2>
-                <a href="/survey" class="stock-action-btn">
-                    <i class="fas fa-sync-alt"></i>
-                    다시 분석
-                </a>
-            </div>
-            <div class="profile-content">
-                <div class="profile-item">
-                    <p class="profile-label">투자 성향</p>
-                    <p class="profile-value" id="investment-type">-</p>
-                </div>
-                <div class="profile-item">
-                    <p class="profile-label">위험 감수도</p>
-                    <p class="profile-value" id="risk-score">-</p>
-                </div>
-                <div class="profile-item">
-                    <p class="profile-label">추천 포트폴리오</p>
-                    <p class="profile-value" id="portfolio-type">-</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 맞춤형 포트폴리오 차트 -->
-        <div class="portfolio-card" id="portfolio-chart-section" style="display: none; margin-top: 24px;">
-            <h3 class="profile-title">맞춤형 포트폴리오 구성</h3>
-            <div class="portfolio-chart-container">
-                <canvas id="myPortfolioChart"></canvas>
-            </div>
-            <div class="portfolio-tips">
-                <p><i class="fas fa-info-circle"></i> 그래프를 클릭하면 상세 종목을 확인할 수 있습니다</p>
-            </div>
-            <button class="primary-button" style="margin-top: 20px; width: 100%;" onclick="showDetailedPortfolio()">
-                자세히 보기
-            </button>
-        </div>
-
-        <!-- 추천 종목 리스트 -->
-        <div class="recommended-stocks-section" id="recommended-stocks-section" style="display: none; margin-top: 40px;">
-            <h3 class="profile-title">맞춤 추천 종목</h3>
-            <div id="myRecommendedStocksGrid" class="my-invest-grid">
-                <!-- 동적으로 로드됨 -->
-            </div>
-        </div>
-
-        <!-- 포트폴리오가 없는 경우 -->
-        <div class="empty-state" id="empty-portfolio" style="display: none;">
-            <div class="empty-icon">
-                <i class="fas fa-chart-pie"></i>
-            </div>
-            <h3 class="empty-title">아직 투자 프로필이 없습니다</h3>
-            <p class="empty-description">
-                투자 성향을 분석하고 맞춤 포트폴리오를 추천받아보세요
-            </p>
-            <a href="/survey" class="primary-button">투자 성향 분석 시작</a>
-        </div>
-    </div>
-
-    <!-- 관심 종목 그리드 -->
-    <div id="watchlist-section" style="display: none;">
-        <div class="my-invest-grid" id="watchlist-grid">
-            <!-- 동적으로 로드됨 -->
-        </div>
-        
-        <!-- 관심 종목이 없는 경우 -->
-        <div class="empty-state" id="empty-watchlist" style="display: none;">
-            <div class="empty-icon">
-                <i class="fas fa-bookmark"></i>
-            </div>
-            <h3 class="empty-title">관심 종목이 없습니다</h3>
-            <p class="empty-description">
-                주식을 검색하고 관심 종목을 추가해보세요
-            </p>
-            <a href="/stock" class="primary-button">종목 검색하기</a>
-        </div>
-    </div>
-
-    <!-- 투자 분석 섹션 -->
-    <div id="analysis-section" style="display: none;">
-        <div class="empty-state">
-            <div class="empty-icon">
-                <i class="fas fa-chart-line"></i>
-            </div>
-            <h3 class="empty-title">투자 분석 준비 중</h3>
-            <p class="empty-description">
-                곧 제공될 예정입니다
-            </p>
-        </div>
-    </div>
-
-    <!-- 맞춤 뉴스 섹션 -->
-    <div id="news-section" style="display: none;">
-        <div class="my-invest-grid" id="news-grid">
-            <!-- 동적으로 로드됨 -->
-        </div>
-    </div>
-</div>
-{% endblock %}
+</script></script>
+</body>
+</html> 
