@@ -107,10 +107,10 @@ def health():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# Vercel 서버리스 함수 핸들러
-def handler(request, context):
-    """Vercel 서버리스 함수 핸들러"""
-    return app(request, context)
+@app.route('/test')
+def test():
+    """테스트 엔드포인트"""
+    return jsonify({'message': 'Hello from Vercel!'})
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
