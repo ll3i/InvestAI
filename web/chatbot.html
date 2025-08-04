@@ -1,9 +1,251 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixie - AI 투자 어드바이저</title>
+    
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 아이콘 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 커스텀 CSS -->
+    <link rel="stylesheet" href="?v=">
+    <link rel="stylesheet" href="?v=">
+    
+    <style>
+        :root {
+            --primary-color: #1454FE;
+            --primary-dark: #0B3DCF;
+            --primary-light: #E6EFFF;
+            --secondary-color: #6C7B95;
+            --success-color: #22C55E;
+            --danger-color: #EF4444;
+            --warning-color: #F59E0B;
+            --dark-color: #1F2937;
+            --light-color: #F8FAFC;
+            --border-color: #E2E8F0;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #1454FE 0%, #0B3DCF 100%);
+            --gradient-secondary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--light-color);
+            font-size: 16px;
+            letter-spacing: -0.02em;
+        }
+        
+        /* Navigation Styles */
+        .pixie-navbar {
+            background: #FFFFFF !important;
+            border-bottom: 1px solid #E5E7EB !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 1000 !important;
+            padding: 0 !important;
+            min-height: 64px !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        
+        .pixie-navbar .container-fluid {
+            display: flex !important;
+            align-items: center !important;
+            height: 100% !important;
+        }
+        
+        /* 로고 이미지 강제 표시 */
+        .pixie-navbar .navbar-brand img {
+            display: inline-block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            height: 40px !important;
+            width: auto !important;
+            max-width: none !important;
+            min-width: auto !important;
+            position: relative !important;
+            z-index: 10 !important;
+        }
+        
+        /* 아이콘 이미지 강제 표시 */
+        .nav-icon-link img {
+            display: inline-block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            width: 20px !important;
+            height: 20px !important;
+            max-width: none !important;
+            min-width: 20px !important;
+            position: relative !important;
+            z-index: 10 !important;
+        }
+        
+        /* 이미지를 숨길 수 있는 모든 스타일 제거 */
+        img {
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        /* Pixie 텍스트가 표시되지 않도록 */
+        .pixie-navbar .navbar-brand {
+            font-size: 0 !important;
+            color: transparent !important;
+        }
+        
+        /* 로고 이미지만 표시 */
+        .pixie-navbar .navbar-brand img {
+            font-size: initial !important;
+        }
+        
+        
+        .pixie-navbar .navbar-nav {
+            gap: 40px;
+            display: flex !important;
+            align-items: center !important;
+            margin-bottom: 0 !important;
+        }
+        
+        .pixie-navbar .nav-item {
+            display: flex !important;
+            align-items: center !important;
+        }
+        
+        .pixie-navbar .nav-link:hover,
+        .pixie-navbar .nav-link.active {
+            color: var(--primary-color) !important;
+            background-color: var(--primary-light);
+        }
+        
+        .pixie-navbar .navbar-toggler {
+            border: none;
+            padding: 4px 8px;
+        }
+        
+        .pixie-navbar .navbar-toggler:focus {
+            box-shadow: none;
+        }
 
-{% block title %}Pixie - AI 투자 어드바이저{% endblock %}
+        /* Container and Layout */
+        .pixie-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .pixie-main {
+            min-height: calc(100vh - 200px);
+            padding: 40px 0;
+        }
+        
+        /* Cards */
+        .pixie-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+        
+        .pixie-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Buttons */
+        .btn-pixie-primary {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-pixie-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            color: white;
+        }
+        
+        .btn-pixie-secondary {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-pixie-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Typography */
+        .pixie-heading {
+            color: var(--text-primary);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .pixie-text-muted {
+            color: var(--text-secondary);
+        }
+        
+        /* Utilities */
+        .pixie-text-center {
+            text-align: center;
+        }
+        
+        .pixie-mb-3 {
+            margin-bottom: 1rem;
+        }
+        
+        .pixie-mb-4 {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .pixie-container {
+                padding: 0 16px;
+            }
+            
+            .pixie-main {
+                padding: 20px 0;
+            }
+        }
 
-{% block extra_css %}
-<style>
+        /* 네비게이션 항상 표시 */
+    </style>
+    <style>
     /* Pixie Chat Interface Styles */
     .pixie-chatbot-container {
         padding: 40px 20px;
@@ -406,10 +648,84 @@
         }
     }
 </style>
-{% endblock %}
+</head>
+<body class="">
+    <!-- 내비게이션 바 -->
+    <nav class="navbar navbar-expand-lg pixie-navbar default-navbar show" style="display: flex; align-items: center;">
+        <div class="container-fluid pixie-container" style="display: flex; align-items: center;">
+            <a class="navbar-brand" href="index.html" style="display: flex; align-items: center; padding: 0;">
+                <img src="static/images/logo.png" alt="" style="height: 40px; width: auto; display: block; visibility: visible; opacity: 1;" onerror="this.style.display='none'; console.error('Logo image failed to load:', this.src)">
+                <span style="display: none;">Pixie</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav" style="display: flex; align-items: center;">
+                <ul class="navbar-nav me-auto" style="margin-bottom: 0;">
+                    <li class="nav-item">
+                        <a class="nav-link" href="survey.html">
+                            투자 설문
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="learning.html">
+                            투자 학습
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="chatbot.html">
+                            AI 챗봇
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="stock.html">
+                            주가 예측
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="news.html">
+                            뉴스/이슈
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my_invest.html">
+                            MY 투자
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center gap-3">
+                    <a href="/search" class="nav-icon-link">
+                        <img src="static/images/d1.png" alt="검색" style="width: 20px; height: 20px; display: block;" onerror="console.error('Search icon failed to load:', this.src)">
+                    </a>
+                    <a href="/alerts" class="nav-icon-link position-relative">
+                        <img src="static/images/d2.png" alt="알림" style="width: 20px; height: 20px; display: block;" onerror="console.error('Alert icon failed to load:', this.src)">
+                        <span id="alert-unread-badge" class="badge bg-danger rounded-pill position-absolute" style="display:none; top: -5px; right: -5px; font-size: 10px;">0</span>
+                    </a>
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle nav-icon-link p-0" href="#" role="button" data-bs-toggle="dropdown" style="padding: 8px !important;">
+                            <img src="static/images/d3.png" alt="계정" style="width: 20px; height: 20px; display: block;" onerror="console.error('Account icon failed to load:', this.src)">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="/profile">프로필</a></li>
+                            <li><a class="dropdown-item" href="/settings">설정</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/help">도움말</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-{% block content %}
-<div class="pixie-chatbot-container">
+    <!-- 메인 컨텐츠 -->
+    
+    
+    <main class="pixie-main">
+        <div class="pixie-container">
+            <div class="pixie-chatbot-container">
     <div class="pixie-chat-wrapper">
         <div class="pixie-chat-header">
             <div class="pixie-chat-avatar">
@@ -478,16 +794,130 @@
         </div>
     </div>
 </div>
-{% endblock %}
+        </div>
+    </main>
 
-{% block extra_js %}
-<script>
+    <!-- 푸터 -->
+    <footer class="bg-dark text-light py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5 class="mb-3">
+                        <span style="color: var(--primary-color); font-weight: 800;">✨ Pixie</span>
+                    </h5>
+                    <p class="text-muted">
+                        AI 기반 투자 분석으로 더 똑똑한 투자 결정을 내려보세요. 
+                        개인화된 포트폴리오와 실시간 시장 분석을 제공합니다.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-light"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="mb-3">서비스</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="survey.html" class="text-muted text-decoration-none">투자 성향 분석</a></li>
+                        <li><a href="chatbot.html" class="text-muted text-decoration-none">AI 어드바이저</a></li>
+                        <li><a href="stock.html" class="text-muted text-decoration-none">주가 예측</a></li>
+                        <li><a href="my_invest.html" class="text-muted text-decoration-none">포트폴리오</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="mb-3">정보</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="news.html" class="text-muted text-decoration-none">뉴스 분석</a></li>
+                        <li><a href="learning.html" class="text-muted text-decoration-none">투자 학습</a></li>
+                        <li><a href="/alerts" class="text-muted text-decoration-none">알림 서비스</a></li>
+                        <li><a href="/help" class="text-muted text-decoration-none">도움말</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="mb-3">계정</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/profile" class="text-muted text-decoration-none">프로필</a></li>
+                        <li><a href="/settings" class="text-muted text-decoration-none">설정</a></li>
+                        <li><a href="/privacy" class="text-muted text-decoration-none">개인정보</a></li>
+                        <li><a href="/terms" class="text-muted text-decoration-none">이용약관</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-12 mb-4">
+                    <h6 class="mb-3">지원</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/contact" class="text-muted text-decoration-none">문의하기</a></li>
+                        <li><a href="/faq" class="text-muted text-decoration-none">자주묻는질문</a></li>
+                        <li><a href="/feedback" class="text-muted text-decoration-none">피드백</a></li>
+                        <li><a href="/status" class="text-muted text-decoration-none">서비스 상태</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="my-4">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-muted mb-0">
+                        © 2024 Pixie. All rights reserved.
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="text-muted mb-0">
+                        <small>데모 서비스입니다. 투자에는 원금 손실 위험이 있습니다.</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- 챗봇 위젯 JS -->
+    <script src="?v="></script>
+    
+    <!-- 커스텀 JS -->
+    <script>
+        // 알림 배지 업데이트 함수
+        function updateAlertBadge() {
+            const badge = document.getElementById('alert-unread-badge;
+            if (badge) {
+                // 여기서 실제 알림 수를 가져오는 API 호출
+                const unreadCount = 0; // 임시로 0으로 설정
+                if (unreadCount > 0) {
+                    badge.textContent = unreadCount;
+                    badge.style.display = 'inline-block';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+        }
+        
+        // 페이지 로드 시 알림 배지 업데이트
+        document.addEventListener('DOMContentLoaded', updateAlertBadge);
+        
+        // 5분마다 알림 배지 업데이트
+        setInterval(updateAlertBadge, 300000);
+    </script>
+    
+    <script>
 let chatHistory = [];
 let isTyping = false;
 
 // 세션 ID 생성 및 관리
 function getSessionId() {
-    let sessionId = localStorage.getItem('chatbot_session_id');
+    let sessionId = localStorage.getItem('chatbot_session_id;
     if (!sessionId) {
         // UUID 형태의 세션 ID 생성
         sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
@@ -499,22 +929,22 @@ function getSessionId() {
 // 페이지 로드 시 이벤트 리스너 설정 및 채팅 기록 로드
 document.addEventListener('DOMContentLoaded', function() {
     // 전송 버튼 이벤트 리스너
-    const sendButton = document.getElementById('sendButton');
+    const sendButton = document.getElementById('sendButton;
     if (sendButton) {
         sendButton.addEventListener('click', sendMessage);
     }
     
     // 입력 필드 엔터 키 이벤트 리스너
-    const chatInput = document.getElementById('chatInput');
+    const chatInput = document.getElementById('chatInput;
     if (chatInput) {
         chatInput.addEventListener('keypress', handleKeyPress);
     }
     
     // 제안 칩 이벤트 리스너
-    const suggestionChips = document.querySelectorAll('.pixie-suggestion-chip');
+    const suggestionChips = document.querySelectorAll('.pixie-suggestion-chip;
     suggestionChips.forEach(chip => {
         chip.addEventListener('click', function() {
-            const suggestion = this.getAttribute('data-suggestion');
+            const suggestion = this.getAttribute('data-suggestion;
             sendSuggestion(suggestion);
         });
     });
@@ -527,7 +957,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 100);
     
     // 설문 결과 보기 버튼 이벤트 리스너
-    const viewResultsButton = document.getElementById('viewSurveyResults');
+    const viewResultsButton = document.getElementById('viewSurveyResults;
     if (viewResultsButton) {
         viewResultsButton.addEventListener('click', showSurveyResults);
     }
@@ -535,21 +965,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 async function checkProfileStatus() {
     try {
-        const response = await fetch('/api/profile-status');
+        const response = await fetch('/api/profile-status;
         const data = await response.json();
         
-        const chatMessages = document.getElementById('chatMessages');
+        const chatMessages = document.getElementById('chatMessages;
         
         // 기존 메시지가 없을 때만 추가
         if (chatMessages.children.length === 0) {
-            const initialMessage = document.createElement('div');
+            const initialMessage = document.createElement('div;
             initialMessage.className = 'pixie-message pixie-message-ai';
             initialMessage.innerHTML = `
                 <div class="message-content">
                     <p>안녕하세요! 저는 Pixie AI 투자 어드바이저입니다. 투자에 관한 모든 질문에 답변해드릴 수 있습니다.</p>
                     <p>먼저 투자 성향 설문을 완료해 주세요! 설문이 끝나면 맞춤형 분석과 포트폴리오 추천을 드릴 수 있습니다.</p>
                     <div style="display: flex; gap: 10px; margin-top: 12px;">
-                        <a href="/survey" class="pixie-survey-button" style="display: inline-block; padding: 10px 20px; background: #1454FE; color: white; text-decoration: none; border-radius: 20px; font-weight: 500;">투자 설문 시작하기</a>
+                        <a href="survey.html" class="pixie-survey-button" style="display: inline-block; padding: 10px 20px; background: #1454FE; color: white; text-decoration: none; border-radius: 20px; font-weight: 500;">투자 설문 시작하기</a>
                         <a href="#" class="pixie-survey-results-button" onclick="showSurveyResults(event)" style="display: inline-block; padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 20px; font-weight: 500;">설문 결과 보기</a>
                     </div>
                 </div>
@@ -569,8 +999,8 @@ function handleKeyPress(event) {
 }
 
 function sendMessage() {
-    console.log('sendMessage called');
-    const input = document.getElementById('chatInput');
+    console.log('sendMessage called;
+    const input = document.getElementById('chatInput;
     const message = input.value.trim();
     
     console.log('Message:', message, 'isTyping:', isTyping);
@@ -578,7 +1008,7 @@ function sendMessage() {
     if (!message || isTyping) return;
     
     // 사용자 메시지 추가
-    addMessage(message, 'user');
+    addMessage(message, 'user;
     input.value = '';
     
     // AI 응답 생성
@@ -586,16 +1016,16 @@ function sendMessage() {
 }
 
 function sendSuggestion(text) {
-    document.getElementById('chatInput').value = text;
+    document.getElementById('chatInput.value = text;
     sendMessage();
 }
 
 function addMessage(content, sender) {
-    const chatMessages = document.getElementById('chatMessages');
-    const messageDiv = document.createElement('div');
+    const chatMessages = document.getElementById('chatMessages;
+    const messageDiv = document.createElement('div;
     messageDiv.className = `pixie-message pixie-message-${sender}`;
     
-    if (sender === 'user') {
+    if (sender === 'user {
         messageDiv.innerHTML = `<div class="message-content">${content}</div>`;
     } else {
         messageDiv.innerHTML = `<div class="message-content"><p>${content}</p></div>`;
@@ -610,19 +1040,19 @@ function addMessage(content, sender) {
 }
 
 function addAgentMessage(content, agent) {
-    const chatMessages = document.getElementById('chatMessages');
-    const messageDiv = document.createElement('div');
+    const chatMessages = document.getElementById('chatMessages;
+    const messageDiv = document.createElement('div;
     
     // 에이전트에 따른 클래스 설정
     let agentClass = '';
     let agentLabel = '';
     let agentIcon = '';
     
-    if (agent === 'AI-A2') {
+    if (agent === 'AI-A2 {
         agentClass = 'agent-a2';
         agentLabel = 'AI-A2 (투자 분석가)';
         agentIcon = 'A2';
-    } else if (agent === 'AI-B') {
+    } else if (agent === 'AI-B {
         agentClass = 'agent-b';
         agentLabel = 'AI-B (금융 데이터 전문가)';
         agentIcon = 'B';
@@ -655,8 +1085,8 @@ function addAgentMessage(content, agent) {
 }
 
 function showTypingIndicator() {
-    const chatMessages = document.getElementById('chatMessages');
-    const typingDiv = document.createElement('div');
+    const chatMessages = document.getElementById('chatMessages;
+    const typingDiv = document.createElement('div;
     typingDiv.className = 'pixie-typing-indicator';
     typingDiv.id = 'typingIndicator';
     typingDiv.innerHTML = `
@@ -669,7 +1099,7 @@ function showTypingIndicator() {
 }
 
 function hideTypingIndicator() {
-    const typingIndicator = document.getElementById('typingIndicator');
+    const typingIndicator = document.getElementById('typingIndicator;
     if (typingIndicator) {
         typingIndicator.remove();
     }
@@ -688,7 +1118,7 @@ async function generateAIResponse(userMessage) {
         
         eventSource.addEventListener('status', function(event) {
             const data = JSON.parse(event.data);
-            if (data.agent && data.status === 'thinking') {
+            if (data.agent && data.status === 'thinking {
                 showAIStatus(`${data.agent} is thinking...`);
                 currentAgent = data.agent;
             }
@@ -703,7 +1133,7 @@ async function generateAIResponse(userMessage) {
                 addAgentMessage(data.content, data.agent);
                 agentResponses[data.agent] = data.content;
                 // Show typing indicator for next agent
-                if (data.agent !== 'Final') {
+                if (data.agent !== 'Final {
                     showTypingIndicator();
                 }
             }
@@ -724,8 +1154,8 @@ async function generateAIResponse(userMessage) {
             // If we have agent responses, add a divider before final response
             if (Object.keys(agentResponses).length > 0 && fullResponse) {
                 // Add conversation divider
-                const chatMessages = document.getElementById('chatMessages');
-                const divider = document.createElement('div');
+                const chatMessages = document.getElementById('chatMessages;
+                const divider = document.createElement('div;
                 divider.className = 'agent-conversation-divider';
                 divider.innerHTML = '<span>최종 답변</span>';
                 chatMessages.appendChild(divider);
@@ -747,10 +1177,10 @@ async function generateAIResponse(userMessage) {
                     finalMessageContent += `</div>`;
                 }
                 
-                addMessage(finalMessageContent, 'ai');
+                addMessage(finalMessageContent, 'ai;
             } else if (Object.keys(agentResponses).length === 0 && fullResponse) {
                 // No agent responses, show the full response
-                addMessage(fullResponse, 'ai');
+                addMessage(fullResponse, 'ai;
             }
             isTyping = false;
         });
@@ -787,53 +1217,53 @@ async function generateAIResponseFallback(userMessage) {
         hideAIStatus();
         
         if (data.success) {
-            addMessage(data.response, 'ai');
+            addMessage(data.response, 'ai;
             if (data.require_survey) {
                 // Add survey button if needed
-                const chatMessages = document.getElementById('chatMessages');
-                const surveyBtn = document.createElement('div');
-                surveyBtn.innerHTML = '<a href="/survey" class="pixie-survey-button" style="display: inline-block; margin: 12px 0; padding: 10px 20px; background: #1454FE; color: white; text-decoration: none; border-radius: 20px; font-weight: 500;">투자 설문 시작하기</a>';
+                const chatMessages = document.getElementById('chatMessages;
+                const surveyBtn = document.createElement('div;
+                surveyBtn.innerHTML = '<a href="survey.html" class="pixie-survey-button" style="display: inline-block; margin: 12px 0; padding: 10px 20px; background: #1454FE; color: white; text-decoration: none; border-radius: 20px; font-weight: 500;">투자 설문 시작하기</a>';
                 chatMessages.appendChild(surveyBtn);
             }
         } else {
-            addMessage('죄송합니다. 일시적인 오류가 발생했습니다. 다시 시도해주세요.', 'ai');
+            addMessage('죄송합니다. 일시적인 오류가 발생했습니다. 다시 시도해주세요.', 'ai;
         }
     } catch (error) {
         console.error('Error:', error);
         hideTypingIndicator();
         hideAIStatus();
-        addMessage('죄송합니다. 네트워크 오류가 발생했습니다. 다시 시도해주세요.', 'ai');
+        addMessage('죄송합니다. 네트워크 오류가 발생했습니다. 다시 시도해주세요.', 'ai;
     }
     
     isTyping = false;
 }
 
 function loadChatHistory() {
-    fetch('/api/chat-history')
+    fetch('/api/chat-history
         .then(response => response.json())
         .then(data => {
             if (data.success && data.history && data.history.length > 0) {
                 // 기본 메시지는 제외하고 실제 대화 내용만 표시
                 const filteredHistory = data.history.filter(msg => {
-                    return !msg.content.includes('현재 귀하의 투자 성향을 고려한 포트폴리오를 추천해 드립니다:') &&
-                           !msg.content.includes('안녕하세요! 저는 Pixie AI 투자 어드바이저입니다.');
+                    return !msg.content.includes('현재 귀하의 투자 성향을 고려한 포트폴리오를 추천해 드립니다: &&
+                           !msg.content.includes('안녕하세요! 저는 Pixie AI 투자 어드바이저입니다.;
                 });
                 
                 if (filteredHistory.length > 0) {
                     chatHistory = filteredHistory;
                     // 채팅 메시지 영역 초기화
-                    const chatMessages = document.getElementById('chatMessages');
+                    const chatMessages = document.getElementById('chatMessages;
                     chatMessages.innerHTML = '';
                     
                     // 초기 메시지 다시 추가
-                    const initialMessage = document.createElement('div');
+                    const initialMessage = document.createElement('div;
                     initialMessage.className = 'pixie-message pixie-message-ai';
                     initialMessage.innerHTML = `
                         <div class="message-content">
                             <p>안녕하세요! 저는 Pixie AI 투자 어드바이저입니다. 투자에 관한 모든 질문에 답변해드릴 수 있습니다.</p>
                             <p>먼저 투자 성향 설문을 완료해 주세요! 설문이 끝나면 맞춤형 분석과 포트폴리오 추천을 드릴 수 있습니다.</p>
                             <div style="display: flex; gap: 10px; margin-top: 12px;">
-                                <a href="/survey" class="pixie-survey-button" style="display: inline-block; padding: 10px 20px; background: #1454FE; color: white; text-decoration: none; border-radius: 20px; font-weight: 500;">투자 설문 시작하기</a>
+                                <a href="survey.html" class="pixie-survey-button" style="display: inline-block; padding: 10px 20px; background: #1454FE; color: white; text-decoration: none; border-radius: 20px; font-weight: 500;">투자 설문 시작하기</a>
                                 <a href="#" class="pixie-survey-results-button" onclick="showSurveyResults(event)" style="display: inline-block; padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 20px; font-weight: 500;">설문 결과 보기</a>
                             </div>
                         </div>
@@ -874,8 +1304,8 @@ function saveChatHistory() {
 }
 
 function showAIStatus(text) {
-    const aiStatus = document.getElementById('aiStatus');
-    const aiStatusText = document.getElementById('aiStatusText');
+    const aiStatus = document.getElementById('aiStatus;
+    const aiStatusText = document.getElementById('aiStatusText;
     if (aiStatus && aiStatusText) {
         aiStatusText.textContent = text;
         aiStatus.style.display = 'block';
@@ -883,7 +1313,7 @@ function showAIStatus(text) {
 }
 
 function hideAIStatus() {
-    const aiStatus = document.getElementById('aiStatus');
+    const aiStatus = document.getElementById('aiStatus;
     if (aiStatus) {
         aiStatus.style.display = 'none';
     }
@@ -894,16 +1324,16 @@ async function showSurveyResults(event) {
     
     try {
         // 프로필 상태 확인
-        const statusResponse = await fetch('/api/profile-status');
+        const statusResponse = await fetch('/api/profile-status;
         const statusData = await statusResponse.json();
         
         if (!statusData.success || !statusData.has_profile) {
-            addMessage('아직 투자 설문을 완료하지 않으셨습니다. 먼저 설문을 완료해주세요.', 'ai');
+            addMessage('아직 투자 설문을 완료하지 않으셨습니다. 먼저 설문을 완료해주세요.', 'ai;
             return;
         }
         
         // 프로필 데이터 가져오기
-        const profileResponse = await fetch('/api/profile');
+        const profileResponse = await fetch('/api/profile;
         const profileData = await profileResponse.json();
         
         if (profileData.success && profileData.profile) {
@@ -993,13 +1423,13 @@ async function showSurveyResults(event) {
             resultMessage += '<p style="color: #333; line-height: 1.6; margin-bottom: 10px;">';
             resultMessage += `귀하의 투자 성향은 <strong>${profile.personality_type || '분석 중'}</strong>입니다. `;
             
-            if (profile.personality_type === '공격투자형') {
+            if (profile.personality_type === '공격투자형 {
                 resultMessage += '높은 수익을 추구하며 위험을 감수할 수 있는 투자자입니다. 성장주, 테마주, 해외주식 등 고위험 고수익 상품에 적합합니다.';
-            } else if (profile.personality_type === '적극투자형') {
+            } else if (profile.personality_type === '적극투자형 {
                 resultMessage += '수익을 추구하면서도 일정 수준의 위험 관리를 하는 투자자입니다. 성장 가능성이 높은 우량주와 일부 성장주를 조합한 포트폴리오가 적합합니다.';
-            } else if (profile.personality_type === '위험중립형') {
+            } else if (profile.personality_type === '위험중립형 {
                 resultMessage += '안정성과 수익성의 균형을 추구하는 투자자입니다. 대형 우량주 중심으로 일부 성장주를 포함한 균형잡힌 포트폴리오가 적합합니다.';
-            } else if (profile.personality_type === '안정추구형') {
+            } else if (profile.personality_type === '안정추구형 {
                 resultMessage += '원금 보존을 중시하며 안정적인 수익을 추구하는 투자자입니다. 배당주, 대형 우량주 중심의 안정적인 포트폴리오가 적합합니다.';
             } else {
                 resultMessage += '원금 보존을 최우선으로 하는 보수적인 투자자입니다. 예금, 채권, 대형 우량주 위주의 매우 안정적인 포트폴리오가 적합합니다.';
@@ -1013,32 +1443,32 @@ async function showSurveyResults(event) {
             
             resultMessage += '</div>';
             
-            addMessage(resultMessage, 'ai');
+            addMessage(resultMessage, 'ai;
             
             // 추가 안내 메시지
             setTimeout(() => {
-                addMessage('투자 성향을 바탕으로 구체적인 종목 추천을 원하시면 "내 투자 성향에 맞는 코스닥 종목 추천해줘" 라고 물어보세요!', 'ai');
+                addMessage('투자 성향을 바탕으로 구체적인 종목 추천을 원하시면 "내 투자 성향에 맞는 코스닥 종목 추천해줘" 라고 물어보세요!', 'ai;
             }, 1000);
             
         } else {
-            addMessage('투자 성향 정보를 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.', 'ai');
+            addMessage('투자 성향 정보를 불러오는 중 오류가 발생했습니다. 다시 시도해주세요.', 'ai;
         }
     } catch (error) {
         console.error('설문 결과 표시 오류:', error);
-        addMessage('설문 결과를 표시하는 중 오류가 발생했습니다.', 'ai');
+        addMessage('설문 결과를 표시하는 중 오류가 발생했습니다.', 'ai;
     }
 }
 
 // 시장 분석 요청 함수
 async function requestMarketAnalysis() {
-    const marketAnalysisBtn = document.getElementById('marketAnalysisBtn');
+    const marketAnalysisBtn = document.getElementById('marketAnalysisBtn;
     if (marketAnalysisBtn) {
         marketAnalysisBtn.disabled = true;
         marketAnalysisBtn.innerHTML = '<span style="font-size: 20px;">⏳</span> 시장 분석 중...';
     }
     
     // 사용자 메시지 추가
-    addMessage('[실시간 시장 분석 요청] 최신 뉴스 감정 분석을 기반으로 현재 시장 상황을 분석해주세요', 'user');
+    addMessage('[실시간 시장 분석 요청] 최신 뉴스 감정 분석을 기반으로 현재 시장 상황을 분석해주세요', 'user;
     
     try {
         // 빠른 시장 분석 API 호출
@@ -1055,19 +1485,20 @@ async function requestMarketAnalysis() {
         
         if (data.success) {
             // 빠른 분석 결과 표시
-            addMessage(data.response, 'ai');
+            addMessage(data.response, 'ai;
             
             // 추가 정보가 있으면 표시
             if (data.data && data.data.keywords && data.data.keywords.length > 0) {
-                const keywordInfo = `\n📌 **주요 키워드**: ${data.data.keywords.slice(0, 5).map(k => k.keyword).join(', ')}`;
-                addMessage(keywordInfo, 'ai');
+                const keywordInfo = `
+📌 **주요 키워드**: ${data.data.keywords.slice(0, 5).map(k => k.keyword).join(', }`;
+                addMessage(keywordInfo, 'ai;
             }
         } else {
-            addMessage('시장 분석 중 오류가 발생했습니다. 다시 시도해주세요.', 'ai');
+            addMessage('시장 분석 중 오류가 발생했습니다. 다시 시도해주세요.', 'ai;
         }
     } catch (error) {
         console.error('시장 분석 오류:', error);
-        addMessage('시장 분석 중 오류가 발생했습니다. 다시 시도해주세요.', 'ai');
+        addMessage('시장 분석 중 오류가 발생했습니다. 다시 시도해주세요.', 'ai;
     } finally {
         // 버튼 상태 복원
         if (marketAnalysisBtn) {
@@ -1079,4 +1510,5 @@ async function requestMarketAnalysis() {
     }
 }
 </script>
-{% endblock %} 
+</body>
+</html> 
