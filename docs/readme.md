@@ -1,57 +1,39 @@
-# MInerva AI Private Banker
+# Pixie - AI 투자 어드바이저 웹사이트
 
-이 프로젝트는 대규모 언어 모델(LLM)을 활용하여 사용자 개인 성향 맞춤형 AI Private Banker 서비스를 제공합니다.
+이 저장소는 Pixie AI 투자 어드바이저의 정적 웹사이트입니다.
 
-MINERVA은 개인화된 투자 조언을 제공하여 사용자의 금융 투자를 돕습니다.
+## 페이지 구성
 
-## 파일 설명
+- **메인 페이지** (`index.html`) - 서비스 소개 및 주요 기능
+- **투자 설문** (`survey.html`) - 투자 성향 분석 설문
+- **투자 학습** (`learning.html`) - 투자 교육 콘텐츠
+- **AI 챗봇** (`chatbot.html`) - AI 투자 상담 챗봇
+- **뉴스/이슈** (`news.html`) - 실시간 투자 뉴스 및 시장 동향
+- **MY 투자** (`my-investment.html`) - 개인 포트폴리오 대시보드
 
-### 1. `analysis_results.json`
+## GitHub Pages 배포 방법
 
-- `user_survey.py`에서 실행된 사용자의 투자 성향을 분석한 결과를 저장합니다.
-- 사용자의 투자 성향을 기반으로 `AI-A`가 `AI-A2`에게 전달하여 사용자에게 맞춤형 서비스를 제공합니다.
+1. GitHub에 새로운 리포지토리 생성
+2. 이 `docs` 폴더의 모든 파일을 리포지토리에 업로드
+3. Settings → Pages에서 Source를 "Deploy from a branch"로 설정
+4. Branch를 "main", 폴더를 "/ (root)"로 설정
+5. Save 클릭 후 배포 완료 대기 (약 5-10분)
 
-### 2. `long_term_memory.json`
+## 기술 스택
 
-- 사용자와의 장기적인 상호작용 기록을 저장하는 파일입니다.
-- 사용자의 입력과 그에 대한 AI의 응답을 지속적으로 기록하여 `AI-A`에게 제공합니다.
+- HTML5 / CSS3
+- JavaScript (Vanilla)
+- Bootstrap 5.3
+- Chart.js
+- Font Awesome
+- Pretendard 폰트
 
-### 3. `user_survey.py`
+## 주의사항
 
-- 초기 설정을 로드하고, 사용자 입력을 처리하며, 각 모듈을 호출하여 전체 서비스를 실행합니다.
-- `analysis_results.json`, `long_term_memory.json` 파일과 상호작용하며, `main.py`와 함께 작동합니다.
+- 이는 데모 사이트로, 실제 API 연동은 되어 있지 않습니다
+- 모든 데이터는 정적으로 표시됩니다
+- 실제 투자 조언이 아닌 시연 목적입니다
 
-### 4. `minerva.py`
+## 라이선스
 
-- Multi-Agent System을 구현하기 위한 파일입니다.
-- `user_survey.py`와 함께 사용되며, `AI-A`와 `AI-A2`, `AI-B`를 호출하여 사용자에게 맞춤형 서비스를 제공합니다.
-- 특정 기능을 독립적으로 실행하여 테스트하거나 보조적인 작업을 수행합니다.
-
-### 5. `main.py`
-
-- `user_survey.py`와 `minerva.py`를 실행할 때 사용되는 모듈입니다.
-
-### 6-1. `prompt_survery-score.txt`
-
-- 사용자의 투자 성향을 분석하기 위한 프롬프트 텍스트 파일입니다.
-
-### 6-2. `prompt_survery-analysis.txt`
-
-- 사용자의 투자 성향을 분석한 결과를 기반으로 AI-A2에게 전달하기 위한 프롬프트 텍스트 파일입니다.
-
-### 6-3. `prompt_AI-A.txt`
-
-- `AI-A`를 위한 프롬프트 텍스트 파일입니다.
-
-### 6-4. `prompt_AI-A2.txt`
-
-- `AI-B`와의 상요작용을 위한 `AI-A2`의 프롬프트 텍스트 파일입니다.
-
-### 6-5. `prompt_AI-B.txt`
-
-- `AI-A2`와의 상호작용을 위한 `AI-B`를 위한 프롬프트 텍스트 파일입니다.
-
-### 7. `data_processing.ipynb`
-
-- `Minerva` 서비스에 사용되는 데이터를 수집하는 과정이 기록된 파일입니다.
-- 데이터 크롤링 및 전처리, 파생변수 생성, 데이터 임베딩 과정을 구분지어 제공합니다.
+© 2025 PIXIE. All rights reserved.

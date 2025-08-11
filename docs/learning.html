@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>투자 학습 - Pixie</title>
+    
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 아이콘 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 커스텀 CSS -->
+    <link rel="stylesheet" href="static/css/style.css">
+    
+    <style>
+        :root {
+            --pixie-primary: #1454FE;
+            --pixie-primary-dark: #0B3DCF;
+            --pixie-white: #FFFFFF;
+            --pixie-black: #000000;
+            --pixie-gray: #6B6B6B;
+            --pixie-light-gray: #F5F5F5;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background: var(--pixie-light-gray);
+        }
+
+        .navbar {
+            background: white !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .learning-hero {
+            background: var(--pixie-primary);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .learning-hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .learning-hero p {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+
+        .learning-container {
+            max-width: 1200px;
+            margin: -60px auto 40px;
+            padding: 0 20px;
+        }
+
+        .learning-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--pixie-light-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
+            color: var(--pixie-primary);
+        }
+
+        .category-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--pixie-black);
+        }
+
+        .category-description {
+            color: var(--pixie-gray);
+            line-height: 1.6;
+        }
+
+        .learning-section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--pixie-black);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+
+        .course-image {
+            width: 100%;
+            height: 200px;
+            background: var(--pixie-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+        }
+
+        .course-content {
+            padding: 24px;
+        }
+
+        .course-level {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--pixie-light-gray);
+            color: var(--pixie-gray);
+            border-radius: 16px;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .course-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--pixie-black);
+            margin-bottom: 12px;
+        }
+
+        .course-description {
+            color: var(--pixie-gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .course-duration {
+            color: var(--pixie-gray);
+            font-size: 14px;
+        }
+
+        .course-btn {
+            padding: 8px 20px;
+            background: var(--pixie-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .course-btn:hover {
+            background: var(--pixie-primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .progress-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .progress-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--pixie-black);
+        }
+
+        .progress-item {
+            margin-bottom: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .progress-name {
+            font-weight: 500;
+            color: var(--pixie-black);
+        }
+
+        .progress-percent {
+            color: var(--pixie-primary);
+            font-weight: 600;
+        }
+
+        .progress-bar-wrapper {
+            width: 100%;
+            height: 8px;
+            background: var(--pixie-light-gray);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--pixie-primary);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html" style="color: var(--pixie-primary); font-weight: 800; font-size: 28px;">Pixie</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="index.html">홈</a>
+                <a class="nav-link" href="survey.html">투자 설문</a>
+                <a class="nav-link active" href="learning.html">투자 학습</a>
+                <a class="nav-link" href="chatbot.html">AI 챗봇</a>
+                <a class="nav-link" href="news.html">뉴스/이슈</a>
+                <a class="nav-link" href="my-investment.html">MY 투자</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 학습 히어로 섹션 -->
+    <div class="learning-hero">
+        <h1>투자 학습 센터</h1>
+        <p>기초부터 고급까지, 단계별 투자 교육 프로그램</p>
+    </div>
+
+    <!-- 학습 컨테이너 -->
+    <div class="learning-container">
+        <!-- 학습 카테고리 -->
+        <div class="learning-categories">
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 class="category-title">투자 기초</h3>
+                <p class="category-description">주식투자의 기본 개념과 용어를 배워보세요</p>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="category-title">기술적 분석</h3>
+                <p class="category-description">차트 읽기와 매매 타이밍 분석법</p>
+            </div>
+            
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-search-dollar"></i>
+                </div>
+                <h3 class="category-title">기업 분석</h3>
+                <p class="category-description">재무제표 분석과 가치평가 방법</p>
+            </div>
+        </div>
+
+        <!-- 진행 상황 -->
+        <div class="progress-section">
+            <h3 class="progress-title">나의 학습 진행률</h3>
+            
+            <div class="progress-item">
+                <div class="progress-header">
+                    <span class="progress-name">투자 기초 과정</span>
+                    <span class="progress-percent">75%</span>
+                </div>
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar-fill" style="width: 75%"></div>
+                </div>
+            </div>
+            
+            <div class="progress-item">
+                <div class="progress-header">
+                    <span class="progress-name">기술적 분석 입문</span>
+                    <span class="progress-percent">40%</span>
+                </div>
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar-fill" style="width: 40%"></div>
+                </div>
+            </div>
+            
+            <div class="progress-item">
+                <div class="progress-header">
+                    <span class="progress-name">포트폴리오 관리</span>
+                    <span class="progress-percent">20%</span>
+                </div>
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar-fill" style="width: 20%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 추천 강좌 -->
+        <div class="learning-section">
+            <h2 class="section-title">추천 학습 콘텐츠</h2>
+            
+            <div class="course-grid">
+                <div class="course-card">
+                    <div class="course-image">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="course-content">
+                        <span class="course-level">초급</span>
+                        <h4 class="course-title">주식투자 첫걸음</h4>
+                        <p class="course-description">주식의 개념부터 계좌 개설, 첫 매수까지 차근차근 배워보세요.</p>
+                        <div class="course-meta">
+                            <span class="course-duration">총 10강 · 3시간</span>
+                            <button class="course-btn">학습하기</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-image">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="course-content">
+                        <span class="course-level">중급</span>
+                        <h4 class="course-title">차트 분석의 정석</h4>
+                        <p class="course-description">이동평균선, 볼린저밴드 등 주요 기술적 지표 활용법을 익혀보세요.</p>
+                        <div class="course-meta">
+                            <span class="course-duration">총 15강 · 5시간</span>
+                            <button class="course-btn">학습하기</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-image">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div class="course-content">
+                        <span class="course-level">고급</span>
+                        <h4 class="course-title">재무제표 완전정복</h4>
+                        <p class="course-description">기업의 재무 건전성을 판단하고 적정 주가를 계산하는 방법을 배워보세요.</p>
+                        <div class="course-meta">
+                            <span class="course-duration">총 20강 · 8시간</span>
+                            <button class="course-btn">학습하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 투자 용어 사전 -->
+        <div class="learning-section">
+            <h2 class="section-title">오늘의 투자 용어</h2>
+            
+            <div class="course-grid">
+                <div class="course-card">
+                    <div class="course-content">
+                        <h4 class="course-title">PER (주가수익비율)</h4>
+                        <p class="course-description">주가를 주당순이익으로 나눈 값으로, 기업의 수익성 대비 주가 수준을 나타내는 지표입니다.</p>
+                        <button class="course-btn">자세히 보기</button>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-content">
+                        <h4 class="course-title">ROE (자기자본이익률)</h4>
+                        <p class="course-description">기업이 자기자본을 얼마나 효율적으로 운용하여 이익을 창출하는지 보여주는 지표입니다.</p>
+                        <button class="course-btn">자세히 보기</button>
+                    </div>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-content">
+                        <h4 class="course-title">분산투자</h4>
+                        <p class="course-description">투자 위험을 줄이기 위해 여러 종목이나 자산에 나누어 투자하는 전략입니다.</p>
+                        <button class="course-btn">자세히 보기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

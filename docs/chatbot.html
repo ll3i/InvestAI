@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 챗봇 - Pixie</title>
+    
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 아이콘 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 커스텀 CSS -->
+    <link rel="stylesheet" href="static/css/style.css">
+    
+    <style>
+        :root {
+            --pixie-primary: #1454FE;
+            --pixie-primary-dark: #0B3DCF;
+            --pixie-white: #FFFFFF;
+            --pixie-black: #000000;
+            --pixie-gray: #6B6B6B;
+            --pixie-light-gray: #F5F5F5;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background: var(--pixie-light-gray);
+        }
+
+        .navbar {
+            background: white !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .chat-container {
+            max-width: 900px;
+            margin: 40px auto;
+            height: calc(100vh - 140px);
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: var(--pixie-primary);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .chat-avatar {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .chat-info h3 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .chat-info p {
+            margin: 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            background: #FAFBFC;
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--pixie-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: #E0E0E0;
+            color: var(--pixie-gray);
+        }
+
+        .message-content {
+            max-width: 70%;
+            background: white;
+            padding: 16px 20px;
+            border-radius: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .message.user .message-content {
+            background: var(--pixie-primary);
+            color: white;
+        }
+
+        .message-text {
+            margin: 0;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: var(--pixie-gray);
+            margin-top: 4px;
+        }
+
+        .message.user .message-time {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 4px;
+            padding: 16px 20px;
+        }
+
+        .typing-indicator.active {
+            display: flex;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--pixie-gray);
+            border-radius: 50%;
+            animation: typing 1.4s ease-in-out infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.3;
+            }
+            30% {
+                opacity: 1;
+            }
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #E0E0E0;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #E0E0E0;
+            border-radius: 24px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .chat-input:focus {
+            border-color: var(--pixie-primary);
+        }
+
+        .chat-send-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--pixie-primary);
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .chat-send-btn:hover {
+            background: var(--pixie-primary-dark);
+            transform: scale(1.05);
+        }
+
+        .quick-replies {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .quick-reply {
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid var(--pixie-primary);
+            color: var(--pixie-primary);
+            border-radius: 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quick-reply:hover {
+            background: var(--pixie-primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html" style="color: var(--pixie-primary); font-weight: 800; font-size: 28px;">Pixie</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="index.html">홈</a>
+                <a class="nav-link" href="survey.html">투자 설문</a>
+                <a class="nav-link" href="learning.html">투자 학습</a>
+                <a class="nav-link active" href="chatbot.html">AI 챗봇</a>
+                <a class="nav-link" href="news.html">뉴스/이슈</a>
+                <a class="nav-link" href="my-investment.html">MY 투자</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 채팅 컨테이너 -->
+    <div class="chat-container">
+        <!-- 채팅 헤더 -->
+        <div class="chat-header">
+            <div class="chat-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="chat-info">
+                <h3>Pixie AI 투자 어드바이저</h3>
+                <p>24시간 투자 상담이 가능합니다</p>
+            </div>
+        </div>
+
+        <!-- 채팅 메시지 영역 -->
+        <div class="chat-messages" id="chatMessages">
+            <!-- AI 인사 메시지 -->
+            <div class="message">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <p class="message-text">
+                        안녕하세요! AI 투자 어드바이저 Pixie입니다. 🌟<br><br>
+                        투자에 대한 궁금한 점이나 포트폴리오 상담, 시장 분석 등 무엇이든 물어보세요. 
+                        당신의 투자 성공을 위해 최선을 다해 도와드리겠습니다.
+                    </p>
+                    <div class="message-time">오전 10:00</div>
+                </div>
+            </div>
+
+            <!-- 빠른 답변 -->
+            <div class="quick-replies">
+                <button class="quick-reply" onclick="sendQuickReply('주식 투자 시작하는 방법')">주식 투자 시작하는 방법</button>
+                <button class="quick-reply" onclick="sendQuickReply('오늘의 시장 동향')">오늘의 시장 동향</button>
+                <button class="quick-reply" onclick="sendQuickReply('포트폴리오 추천')">포트폴리오 추천</button>
+                <button class="quick-reply" onclick="sendQuickReply('삼성전자 전망')">삼성전자 전망</button>
+            </div>
+
+            <!-- 타이핑 인디케이터 -->
+            <div class="message typing-indicator" id="typingIndicator">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 채팅 입력 영역 -->
+        <div class="chat-input-container">
+            <div class="chat-input-wrapper">
+                <input 
+                    type="text" 
+                    class="chat-input" 
+                    id="chatInput"
+                    placeholder="메시지를 입력하세요..."
+                    onkeypress="handleKeyPress(event)"
+                >
+                <button class="chat-send-btn" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getCurrentTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const period = hours >= 12 ? '오후' : '오전';
+            const displayHours = hours > 12 ? hours - 12 : hours;
+            return `${period} ${displayHours}:${minutes.toString().padStart(2, '0')}`;
+        }
+
+        function scrollToBottom() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // 사용자 메시지 추가
+            addMessage(message, 'user');
+            
+            // 입력창 초기화
+            input.value = '';
+            
+            // AI 응답 시뮬레이션
+            showTypingIndicator();
+            setTimeout(() => {
+                hideTypingIndicator();
+                const aiResponse = getAIResponse(message);
+                addMessage(aiResponse, 'ai');
+            }, 1500);
+        }
+
+        function sendQuickReply(text) {
+            document.getElementById('chatInput').value = text;
+            sendMessage();
+        }
+
+        function addMessage(text, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const quickReplies = document.querySelector('.quick-replies');
+            
+            // 빠른 답변 숨기기
+            if (quickReplies) {
+                quickReplies.style.display = 'none';
+            }
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const avatarIcon = sender === 'user' ? 'fa-user' : 'fa-robot';
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">
+                    <i class="fas ${avatarIcon}"></i>
+                </div>
+                <div class="message-content">
+                    <p class="message-text">${text}</p>
+                    <div class="message-time">${getCurrentTime()}</div>
+                </div>
+            `;
+            
+            chatMessages.insertBefore(messageDiv, document.getElementById('typingIndicator'));
+            scrollToBottom();
+        }
+
+        function showTypingIndicator() {
+            document.getElementById('typingIndicator').classList.add('active');
+            scrollToBottom();
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').classList.remove('active');
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function getAIResponse(message) {
+            const responses = {
+                '주식 투자 시작하는 방법': '주식 투자를 시작하시는군요! 좋은 선택입니다. 😊\n\n1. 먼저 증권사 계좌를 개설하세요\n2. 소액으로 시작하여 경험을 쌓으세요\n3. 기업 분석과 시장 동향을 공부하세요\n4. 분산 투자로 리스크를 관리하세요\n\n투자 성향 분석을 통해 맞춤형 전략을 세워보시는 것은 어떨까요?',
+                '오늘의 시장 동향': '오늘 국내 증시는 전반적으로 상승세를 보이고 있습니다. 📈\n\n• KOSPI: 2,450.32 (+1.2%)\n• KOSDAQ: 845.21 (+0.8%)\n\n주요 이슈:\n- 반도체 업종 강세 지속\n- 바이오 섹터 회복 조짐\n- 외국인 순매수 전환\n\n투자에 유리한 시점으로 보입니다!',
+                '포트폴리오 추천': '투자 성향 분석 결과에 따라 맞춤형 포트폴리오를 추천해드립니다.\n\n균형형 포트폴리오 예시:\n• 국내 주식 40%\n• 해외 주식 30%\n• 채권 20%\n• 현금 10%\n\n더 정확한 추천을 위해 투자 설문을 진행해보시겠어요?',
+                '삼성전자 전망': '삼성전자는 현재 반도체 시장 회복과 함께 긍정적인 전망을 보이고 있습니다.\n\n📊 주요 지표:\n• 현재가: 72,500원\n• 목표가: 85,000원 (상향)\n• PER: 15.2배\n\n긍정 요인:\n- AI 반도체 수요 증가\n- 메모리 가격 상승\n- 실적 개선 전망\n\n장기 투자 관점에서 매력적입니다.'
+            };
+
+            // 기본 응답
+            return responses[message] || '좋은 질문이네요! 투자와 관련된 구체적인 질문을 해주시면 더 정확한 답변을 드릴 수 있습니다. 예를 들어:\n\n• 특정 종목 분석\n• 투자 전략 상담\n• 시장 동향 분석\n• 포트폴리오 구성\n\n무엇을 도와드릴까요?';
+        }
+    </script>
+</body>
+</html>
